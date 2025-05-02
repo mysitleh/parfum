@@ -1,0 +1,398 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Produk</title>
+  <link href="../style.css" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+
+<header class="bg-white shadow sticky top-0 z-50">
+  <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+    <h1 class="text-xl font-bold text-green-600">Admin Produk</h1>
+    <a href="../index.html" class="text-sm text-gray-500 hover:underline">← Kembali ke Toko</a>
+  </div>
+</header>
+
+<main class="max-w-6xl mx-auto px-4 py-6">
+  <h2 class="text-lg font-semibold mb-4">Tambah / Edit Produk</h2>
+  <form id="product-form" class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8 bg-white p-4 rounded shadow">
+    <input type="hidden" id="product-id" />
+    <div>
+      <label class="block mb-1 text-sm">Nama Produk</label>
+      <input type="text" id="product-name" class="w-full border rounded px-3 py-2" required />
+    </div>
+    <div>
+      <label class="block mb-1 text-sm">Kategori</label>
+      <select id="product-category" class="w-full border rounded px-3 py-2">
+        <option value="pria">Pria</option>
+        <option value="wanita">Wanita</option>
+        <option value="unisex">Unisex</option>
+      </select>
+    </div>
+    <div>
+      <label class="block mb-1 text-sm">Harga</label>
+      <input type="number" id="product-price" class="w-full border rounded px-3 py-2" required />
+    </div>
+    <div>
+      <label class="block mb-1 text-sm">Stok</label>
+      <input type="number" id="product-stock" class="w-full border rounded px-3 py-2" required />
+    </div>
+    <div class="col-span-2">
+      <label class="block mb-1 text-sm">URL Gambar</label>
+      <input type="text" id="product-image" class="w-full border rounded px-3 py-2" required />
+    </div>
+    <div class="col-span-2">
+      <label class="block mb-1 text-sm">Deskripsi</label>
+      <textarea id="product-desc" class="w-full border rounded px-3 py-2" rows="2"></textarea>
+    </div>
+
+    <div class="col-span-2">
+      <label class="block mb-1 text-sm">URL Banner</label>
+      <input type="text" id="banner-url" class="w-full border rounded px-3 py-2" />
+    </div>
+
+    <div class="col-span-2 text-right">
+      <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Simpan Produk</button>
+    </div>
+  </form>
+
+  <h2 class="text-lg font-semibold mb-4">Daftar Produk</h2>
+  <div class="overflow-auto border rounded">
+    <table class="min-w-full text-sm text-left bg-white">
+      <thead class="bg-green-100">
+        <tr>
+          <th class="py-2 px-4">Foto</th>
+          <th class="py-2 px-4">Nama</th>
+          <th class="py-2 px-4">Kategori</th>
+          <th class="py-2 px-4">Harga</th>
+          <th class="py-2 px-4">Stok</th>
+          <th class="py-2 px-4">Aksi</th>
+        </tr>
+      </thead>
+      <tbody id="product-list">
+      <tr>
+        <td class="py-2 px-4"><img src="images/parfum2.jpg" class="w-16 h-16 object-cover rounded" /></td>
+        <td class="py-2 px-4">Parfum 1</td>
+        <td class="py-2 px-4">wanita</td>
+        <td class="py-2 px-4">Rp 105,000</td>
+        <td class="py-2 px-4">11</td>
+        <td class="py-2 px-4 text-xs">
+          <button onclick="editProduk(0)" class="text-blue-500 hover:underline">Edit</button>
+          <button onclick="hapusProduk(0)" class="text-red-500 hover:underline ml-2">Hapus</button>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="py-2 px-4"><img src="images/parfum3.jpg" class="w-16 h-16 object-cover rounded" /></td>
+        <td class="py-2 px-4">Parfum 2</td>
+        <td class="py-2 px-4">unisex</td>
+        <td class="py-2 px-4">Rp 110,000</td>
+        <td class="py-2 px-4">12</td>
+        <td class="py-2 px-4 text-xs">
+          <button onclick="editProduk(1)" class="text-blue-500 hover:underline">Edit</button>
+          <button onclick="hapusProduk(1)" class="text-red-500 hover:underline ml-2">Hapus</button>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="py-2 px-4"><img src="images/parfum4.jpg" class="w-16 h-16 object-cover rounded" /></td>
+        <td class="py-2 px-4">Parfum 3</td>
+        <td class="py-2 px-4">pria</td>
+        <td class="py-2 px-4">Rp 115,000</td>
+        <td class="py-2 px-4">13</td>
+        <td class="py-2 px-4 text-xs">
+          <button onclick="editProduk(2)" class="text-blue-500 hover:underline">Edit</button>
+          <button onclick="hapusProduk(2)" class="text-red-500 hover:underline ml-2">Hapus</button>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="py-2 px-4"><img src="images/parfum5.jpg" class="w-16 h-16 object-cover rounded" /></td>
+        <td class="py-2 px-4">Parfum 4</td>
+        <td class="py-2 px-4">wanita</td>
+        <td class="py-2 px-4">Rp 120,000</td>
+        <td class="py-2 px-4">14</td>
+        <td class="py-2 px-4 text-xs">
+          <button onclick="editProduk(3)" class="text-blue-500 hover:underline">Edit</button>
+          <button onclick="hapusProduk(3)" class="text-red-500 hover:underline ml-2">Hapus</button>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="py-2 px-4"><img src="images/parfum1.jpg" class="w-16 h-16 object-cover rounded" /></td>
+        <td class="py-2 px-4">Parfum 5</td>
+        <td class="py-2 px-4">unisex</td>
+        <td class="py-2 px-4">Rp 125,000</td>
+        <td class="py-2 px-4">15</td>
+        <td class="py-2 px-4 text-xs">
+          <button onclick="editProduk(4)" class="text-blue-500 hover:underline">Edit</button>
+          <button onclick="hapusProduk(4)" class="text-red-500 hover:underline ml-2">Hapus</button>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="py-2 px-4"><img src="images/parfum2.jpg" class="w-16 h-16 object-cover rounded" /></td>
+        <td class="py-2 px-4">Parfum 6</td>
+        <td class="py-2 px-4">pria</td>
+        <td class="py-2 px-4">Rp 130,000</td>
+        <td class="py-2 px-4">16</td>
+        <td class="py-2 px-4 text-xs">
+          <button onclick="editProduk(5)" class="text-blue-500 hover:underline">Edit</button>
+          <button onclick="hapusProduk(5)" class="text-red-500 hover:underline ml-2">Hapus</button>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="py-2 px-4"><img src="images/parfum3.jpg" class="w-16 h-16 object-cover rounded" /></td>
+        <td class="py-2 px-4">Parfum 7</td>
+        <td class="py-2 px-4">wanita</td>
+        <td class="py-2 px-4">Rp 135,000</td>
+        <td class="py-2 px-4">17</td>
+        <td class="py-2 px-4 text-xs">
+          <button onclick="editProduk(6)" class="text-blue-500 hover:underline">Edit</button>
+          <button onclick="hapusProduk(6)" class="text-red-500 hover:underline ml-2">Hapus</button>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="py-2 px-4"><img src="images/parfum4.jpg" class="w-16 h-16 object-cover rounded" /></td>
+        <td class="py-2 px-4">Parfum 8</td>
+        <td class="py-2 px-4">unisex</td>
+        <td class="py-2 px-4">Rp 140,000</td>
+        <td class="py-2 px-4">18</td>
+        <td class="py-2 px-4 text-xs">
+          <button onclick="editProduk(7)" class="text-blue-500 hover:underline">Edit</button>
+          <button onclick="hapusProduk(7)" class="text-red-500 hover:underline ml-2">Hapus</button>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="py-2 px-4"><img src="images/parfum5.jpg" class="w-16 h-16 object-cover rounded" /></td>
+        <td class="py-2 px-4">Parfum 9</td>
+        <td class="py-2 px-4">pria</td>
+        <td class="py-2 px-4">Rp 145,000</td>
+        <td class="py-2 px-4">19</td>
+        <td class="py-2 px-4 text-xs">
+          <button onclick="editProduk(8)" class="text-blue-500 hover:underline">Edit</button>
+          <button onclick="hapusProduk(8)" class="text-red-500 hover:underline ml-2">Hapus</button>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="py-2 px-4"><img src="images/parfum1.jpg" class="w-16 h-16 object-cover rounded" /></td>
+        <td class="py-2 px-4">Parfum 10</td>
+        <td class="py-2 px-4">wanita</td>
+        <td class="py-2 px-4">Rp 150,000</td>
+        <td class="py-2 px-4">20</td>
+        <td class="py-2 px-4 text-xs">
+          <button onclick="editProduk(9)" class="text-blue-500 hover:underline">Edit</button>
+          <button onclick="hapusProduk(9)" class="text-red-500 hover:underline ml-2">Hapus</button>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="py-2 px-4"><img src="images/parfum2.jpg" class="w-16 h-16 object-cover rounded" /></td>
+        <td class="py-2 px-4">Parfum 11</td>
+        <td class="py-2 px-4">unisex</td>
+        <td class="py-2 px-4">Rp 155,000</td>
+        <td class="py-2 px-4">21</td>
+        <td class="py-2 px-4 text-xs">
+          <button onclick="editProduk(10)" class="text-blue-500 hover:underline">Edit</button>
+          <button onclick="hapusProduk(10)" class="text-red-500 hover:underline ml-2">Hapus</button>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="py-2 px-4"><img src="images/parfum3.jpg" class="w-16 h-16 object-cover rounded" /></td>
+        <td class="py-2 px-4">Parfum 12</td>
+        <td class="py-2 px-4">pria</td>
+        <td class="py-2 px-4">Rp 160,000</td>
+        <td class="py-2 px-4">22</td>
+        <td class="py-2 px-4 text-xs">
+          <button onclick="editProduk(11)" class="text-blue-500 hover:underline">Edit</button>
+          <button onclick="hapusProduk(11)" class="text-red-500 hover:underline ml-2">Hapus</button>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="py-2 px-4"><img src="images/parfum4.jpg" class="w-16 h-16 object-cover rounded" /></td>
+        <td class="py-2 px-4">Parfum 13</td>
+        <td class="py-2 px-4">wanita</td>
+        <td class="py-2 px-4">Rp 165,000</td>
+        <td class="py-2 px-4">23</td>
+        <td class="py-2 px-4 text-xs">
+          <button onclick="editProduk(12)" class="text-blue-500 hover:underline">Edit</button>
+          <button onclick="hapusProduk(12)" class="text-red-500 hover:underline ml-2">Hapus</button>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="py-2 px-4"><img src="images/parfum5.jpg" class="w-16 h-16 object-cover rounded" /></td>
+        <td class="py-2 px-4">Parfum 14</td>
+        <td class="py-2 px-4">unisex</td>
+        <td class="py-2 px-4">Rp 170,000</td>
+        <td class="py-2 px-4">24</td>
+        <td class="py-2 px-4 text-xs">
+          <button onclick="editProduk(13)" class="text-blue-500 hover:underline">Edit</button>
+          <button onclick="hapusProduk(13)" class="text-red-500 hover:underline ml-2">Hapus</button>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="py-2 px-4"><img src="images/parfum1.jpg" class="w-16 h-16 object-cover rounded" /></td>
+        <td class="py-2 px-4">Parfum 15</td>
+        <td class="py-2 px-4">pria</td>
+        <td class="py-2 px-4">Rp 175,000</td>
+        <td class="py-2 px-4">25</td>
+        <td class="py-2 px-4 text-xs">
+          <button onclick="editProduk(14)" class="text-blue-500 hover:underline">Edit</button>
+          <button onclick="hapusProduk(14)" class="text-red-500 hover:underline ml-2">Hapus</button>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="py-2 px-4"><img src="images/parfum2.jpg" class="w-16 h-16 object-cover rounded" /></td>
+        <td class="py-2 px-4">Parfum 16</td>
+        <td class="py-2 px-4">wanita</td>
+        <td class="py-2 px-4">Rp 180,000</td>
+        <td class="py-2 px-4">26</td>
+        <td class="py-2 px-4 text-xs">
+          <button onclick="editProduk(15)" class="text-blue-500 hover:underline">Edit</button>
+          <button onclick="hapusProduk(15)" class="text-red-500 hover:underline ml-2">Hapus</button>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="py-2 px-4"><img src="images/parfum3.jpg" class="w-16 h-16 object-cover rounded" /></td>
+        <td class="py-2 px-4">Parfum 17</td>
+        <td class="py-2 px-4">unisex</td>
+        <td class="py-2 px-4">Rp 185,000</td>
+        <td class="py-2 px-4">27</td>
+        <td class="py-2 px-4 text-xs">
+          <button onclick="editProduk(16)" class="text-blue-500 hover:underline">Edit</button>
+          <button onclick="hapusProduk(16)" class="text-red-500 hover:underline ml-2">Hapus</button>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="py-2 px-4"><img src="images/parfum4.jpg" class="w-16 h-16 object-cover rounded" /></td>
+        <td class="py-2 px-4">Parfum 18</td>
+        <td class="py-2 px-4">pria</td>
+        <td class="py-2 px-4">Rp 190,000</td>
+        <td class="py-2 px-4">28</td>
+        <td class="py-2 px-4 text-xs">
+          <button onclick="editProduk(17)" class="text-blue-500 hover:underline">Edit</button>
+          <button onclick="hapusProduk(17)" class="text-red-500 hover:underline ml-2">Hapus</button>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="py-2 px-4"><img src="images/parfum5.jpg" class="w-16 h-16 object-cover rounded" /></td>
+        <td class="py-2 px-4">Parfum 19</td>
+        <td class="py-2 px-4">wanita</td>
+        <td class="py-2 px-4">Rp 195,000</td>
+        <td class="py-2 px-4">29</td>
+        <td class="py-2 px-4 text-xs">
+          <button onclick="editProduk(18)" class="text-blue-500 hover:underline">Edit</button>
+          <button onclick="hapusProduk(18)" class="text-red-500 hover:underline ml-2">Hapus</button>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="py-2 px-4"><img src="images/parfum1.jpg" class="w-16 h-16 object-cover rounded" /></td>
+        <td class="py-2 px-4">Parfum 20</td>
+        <td class="py-2 px-4">unisex</td>
+        <td class="py-2 px-4">Rp 200,000</td>
+        <td class="py-2 px-4">30</td>
+        <td class="py-2 px-4 text-xs">
+          <button onclick="editProduk(19)" class="text-blue-500 hover:underline">Edit</button>
+          <button onclick="hapusProduk(19)" class="text-red-500 hover:underline ml-2">Hapus</button>
+        </td>
+      </tr>
+    
+      </tbody>
+    </table>
+  </div>
+</main>
+
+<script>
+let produk = [];
+
+function renderProduk() {
+  const tbody = document.getElementById("product-list");
+  tbody.innerHTML = "";
+  produk.forEach((p, i) => {
+    tbody.innerHTML += `
+      <tr>
+        <td class="py-2 px-4"><img src="${p.image}" class="w-16 h-16 object-cover rounded" /></td>
+        <td class="py-2 px-4">${p.name}</td>
+        <td class="py-2 px-4">${p.category}</td>
+        <td class="py-2 px-4">Rp ${p.price.toLocaleString()}</td>
+        <td class="py-2 px-4">${p.stock}</td>
+        <td class="py-2 px-4 text-xs">
+          <button onclick="editProduk(${i})" class="text-blue-500 hover:underline">Edit</button>
+          <button onclick="hapusProduk(${i})" class="text-red-500 hover:underline ml-2">Hapus</button>
+        </td>
+      </tr>
+    `;
+  });
+}
+
+function editProduk(index) {
+  const p = produk[index];
+  document.getElementById("product-id").value = index;
+  document.getElementById("product-name").value = p.name;
+  document.getElementById("product-category").value = p.category;
+  document.getElementById("product-price").value = p.price;
+  document.getElementById("product-stock").value = p.stock;
+  document.getElementById("product-image").value = p.image;
+  document.getElementById("product-desc").value = p.desc;
+}
+
+function hapusProduk(index) {
+  if (confirm("Hapus produk ini?")) {
+    produk.splice(index, 1);
+      if (produk.length > 0 && produk[0].banner) {
+    document.getElementById("banner-url").value = produk[0].banner;
+  }
+    if (document.getElementById("banner-url").value) produk[0].banner = document.getElementById("banner-url").value;
+  renderProduk();
+  }
+}
+
+document.getElementById("product-form").addEventListener("submit", function(e) {
+  e.preventDefault();
+  const id = document.getElementById("product-id").value;
+  const newProduk = {
+    name: document.getElementById("product-name").value,
+    category: document.getElementById("product-category").value,
+    price: parseInt(document.getElementById("product-price").value),
+    stock: parseInt(document.getElementById("product-stock").value),
+    image: document.getElementById("product-image").value
+  };
+  if (id === "") {
+    produk.push(newProduk);
+  } else {
+    produk[parseInt(id)] = newProduk;
+  }
+  this.reset();
+    if (produk.length > 0 && produk[0].banner) {
+    document.getElementById("banner-url").value = produk[0].banner;
+  }
+    if (document.getElementById("banner-url").value) produk[0].banner = document.getElementById("banner-url").value;
+  renderProduk();
+});
+
+  if (produk.length > 0 && produk[0].banner) {
+    document.getElementById("banner-url").value = produk[0].banner;
+  }
+    if (document.getElementById("banner-url").value) produk[0].banner = document.getElementById("banner-url").value;
+  renderProduk();
+</script>
+
+</body>
+</html>

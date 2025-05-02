@@ -1,0 +1,221 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Toko Parfum</title>
+  <link href="style.css" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com">
+document.addEventListener("DOMContentLoaded", () => {
+  const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+  document.getElementById("cart-count").innerText = cart.length;
+  document.getElementById("notif-message").innerText = `${qty} produk ditambahkan ke keranjang!`;
+  showNotif();
+});
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+  document.getElementById("cart-count").innerText = cart.length;
+});
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+  const count = document.getElementById("cart-count");
+  if (count) count.innerText = cart.length;
+});
+
+</script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700&display=swap');
+    body { font-family: 'Outfit', sans-serif; }
+  </style>
+
+</head>
+<body class="bg-gray-50 text-gray-800">
+<header class="bg-white shadow sticky top-0 z-50">
+  <div class="max-w-6xl mx-auto flex items-center justify-between px-4 py-2">
+    <div class="text-green-600 text-xl font-bold">TokoParfum</div>
+    <div class="flex items-center gap-3">
+      <a href="admin/index.html" class="text-sm text-gray-500 hover:underline">Admin</a>
+      <input id="search" type="text" placeholder="Cari parfum..." class="border rounded px-3 py-1 text-sm w-48" />
+      
+
+<a href="keranjang.html" class="relative flex items-center gap-2 bg-green-500 text-white px-4 py-1.5 rounded hover:bg-green-600">
+  <span class="text-sm font-medium">Keranjang</span>
+  
+</a>
+
+
+        🛒 
+      </button>
+    </div>
+  </div>
+</header>
+
+<section class="max-w-6xl mx-auto px-4 mt-4">
+  <div class="rounded-xl overflow-hidden shadow">
+    <img id="bannerImg" src="" class="w-full" alt="Banner Promo" />
+  </div>
+</section>
+
+
+
+<section class="max-w-6xl mx-auto px-4 py-6">
+  <h1 class="text-2xl font-bold text-center mb-4">Daftar Parfum</h1>
+  <div id="products-container" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4"></div>
+  <div class="flex justify-center items-center mt-4 gap-4">
+    <button id="prev-btn" class="bg-gray-300 text-sm px-3 py-1 rounded">Sebelumnya</button>
+    <span id="page-indicator" class="text-sm font-medium">Halaman 1</span>
+    <button id="next-btn" class="bg-gray-300 text-sm px-3 py-1 rounded">Berikutnya</button>
+  </div>
+</section>
+
+<!-- Modal Produk -->
+<div id="productModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+  <div class="bg-white w-11/12 sm:w-96 rounded-xl shadow-lg p-5 relative">
+    <button onclick="closeModal()" class="absolute top-2 right-3 text-gray-500 text-xl">&times;</button>
+    <img id="modalImg" src="" class="w-full h-48 object-cover rounded mb-3" alt="Produk">
+    <h2 id="modalName" class="text-xl font-bold mb-1"></h2>
+    <p id="modalPrice" class="text-gray-600 mb-1"></p>
+    <p id="modalDesc" class="text-sm text-gray-500 mb-3"></p>
+    <button id="modalBuy" class="w-full bg-green-500 text-white py-2 rounded hover:bg-green-600">+ Keranjang</button>
+  </div>
+</div>
+
+<script>
+let cart = [];
+let products = [];
+const productsPerPage = 12;
+let currentPage = 1;
+
+function openModal(img, name, price, desc) {
+  document.getElementById("modalImg").src = img;
+  document.getElementById("modalName").innerText = name;
+  document.getElementById("modalPrice").innerText = "Rp " + price.toLocaleString();
+  document.getElementById("modalDesc").innerText = desc;
+  document.getElementById("modalBuy").onclick = () => addToCart(name, price);
+  document.getElementById("productModal").classList.remove("hidden");
+}
+
+function closeModal() {
+  document.getElementById("productModal").classList.add("hidden");
+}
+
+
+function showNotif() {
+  const notif = document.getElementById("notif");
+  notif.classList.remove("hidden");
+  notif.classList.add("opacity-100");
+  setTimeout(() => {
+    notif.classList.add("hidden");
+    notif.classList.remove("opacity-100");
+  }, 2000);
+}
+
+function addToCart(name, price) {
+  const qty = parseInt(document.getElementById("globalQty")?.value || "1");
+  let cart = JSON.parse(localStorage.getItem("cart") || "[]");
+  for (let i = 0; i < qty; i++) cart.push({ name, price });
+  localStorage.setItem("cart", JSON.stringify(cart));
+  document.getElementById("cart-count").innerText = cart.length;
+  document.getElementById("notif-message").innerText = `${qty} produk ditambahkan ke keranjang!`;
+  showNotif();
+}
+
+function renderPage(page) {
+  const container = document.getElementById("products-container");
+  container.innerHTML = "";
+  const start = (page - 1) * productsPerPage;
+  const end = page * productsPerPage;
+  const sliced = products.slice(start, end);
+  sliced.forEach(p => {
+    container.innerHTML += `
+      <div class="product-card bg-white rounded-xl shadow overflow-hidden">
+        <div class="relative"><button onclick="addToWishlist('{{name}}')" class="absolute top-2 right-2 text-white bg-black bg-opacity-50 rounded-full w-6 h-6 text-sm">♡</button>
+<img onclick="openModal(\'${p.image}\', \'${p.name}\', ${p.price}, \'${p.name} adalah parfum berkualitas yang cocok untuk semua aktivitas\')"
+             class="w-full h-48 object-cover cursor-pointer" src="${p.image}" alt="${p.name}">
+        <div class="p-3">
+          <h3 class="text-base font-semibold">${p.name}</h3>
+          <p class="text-sm text-gray-600 mb-1">Rp ${p.price.toLocaleString()}</p>
+          <p class="text-xs text-gray-400">Stok: ${p.stock}</p>
+                    <button onclick="addToCart('')"
+            class="block w-full text-center bg-gray-300 text-gray-800 py-1.5 rounded hover:bg-gray-400 transition mb-1">♡ Wishlist</button>
+                    <button onclick="addToCart('${p.name}', ${p.price})"
+            class="block w-full text-center bg-green-500 text-white py-1.5 rounded hover:bg-green-600 transition">
+            + Keranjang
+          </button>
+        </div>
+      </div>`;
+  });
+  document.getElementById("page-indicator").innerText = `Halaman ${page}`;
+}
+
+document.getElementById("prev-btn").onclick = () => {
+  if (currentPage > 1) {
+    currentPage--;
+    renderPage(currentPage);
+    document.getElementById('loader').classList.add('hidden');
+  }
+};
+
+document.getElementById("next-btn").onclick = () => {
+  if (currentPage < Math.ceil(products.length / productsPerPage)) {
+    currentPage++;
+    renderPage(currentPage);
+    document.getElementById('loader').classList.add('hidden');
+  }
+};
+
+fetch("data/banner.json")
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById("bannerImg").src = data.url;
+  });
+
+  fetch("data/produk.json")
+  .then(res => res.json())
+  .then(data => {
+    products = data;
+    renderPage(currentPage);
+    document.getElementById('loader').classList.add('hidden');
+  });
+
+document.addEventListener("DOMContentLoaded", () => {
+  const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+  document.getElementById("cart-count").innerText = cart.length;
+  document.getElementById("notif-message").innerText = `${qty} produk ditambahkan ke keranjang!`;
+  showNotif();
+});
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+  document.getElementById("cart-count").innerText = cart.length;
+});
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+  const count = document.getElementById("cart-count");
+  if (count) count.innerText = cart.length;
+});
+
+</script>
+
+<!-- Notifikasi Tambah Keranjang -->
+<div id="notif" class="fixed top-5 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-4 py-2 rounded shadow-lg text-sm hidden z-50 transition-all duration-300 ease-out">
+  <span id="notif-message">Produk ditambahkan ke keranjang!</span>
+</div>
+
+
+<!-- Loader -->
+<div id="loader" class="fixed inset-0 bg-white bg-opacity-80 flex items-center justify-center z-50">
+  <div class="animate-spin rounded-full h-12 w-12 border-t-4 border-green-500 border-opacity-75"></div>
+</div>
+
+</body>
+</html>

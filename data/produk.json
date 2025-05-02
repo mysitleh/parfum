@@ -1,0 +1,182 @@
+[
+  {
+    "id": 1,
+    "name": "Parfum 1",
+    "category": "wanita",
+    "price": 105000,
+    "stock": 11,
+    "image": "images/parfum2.jpg",
+    "deskripsi": "Parfum 1 adalah parfum kategori wanita yang menyegarkan, cocok digunakan sehari-hari."
+  },
+  {
+    "id": 2,
+    "name": "Parfum 2",
+    "category": "unisex",
+    "price": 110000,
+    "stock": 12,
+    "image": "images/parfum3.jpg",
+    "deskripsi": "Parfum 2 adalah parfum kategori unisex yang menyegarkan, cocok digunakan sehari-hari."
+  },
+  {
+    "id": 3,
+    "name": "Parfum 3",
+    "category": "pria",
+    "price": 115000,
+    "stock": 13,
+    "image": "images/parfum4.jpg",
+    "deskripsi": "Parfum 3 adalah parfum kategori pria yang menyegarkan, cocok digunakan sehari-hari."
+  },
+  {
+    "id": 4,
+    "name": "Parfum 4",
+    "category": "wanita",
+    "price": 120000,
+    "stock": 14,
+    "image": "images/parfum5.jpg",
+    "deskripsi": "Parfum 4 adalah parfum kategori wanita yang menyegarkan, cocok digunakan sehari-hari."
+  },
+  {
+    "id": 5,
+    "name": "Parfum 5",
+    "category": "unisex",
+    "price": 125000,
+    "stock": 15,
+    "image": "images/parfum1.jpg",
+    "deskripsi": "Parfum 5 adalah parfum kategori unisex yang menyegarkan, cocok digunakan sehari-hari."
+  },
+  {
+    "id": 6,
+    "name": "Parfum 6",
+    "category": "pria",
+    "price": 130000,
+    "stock": 16,
+    "image": "images/parfum2.jpg",
+    "deskripsi": "Parfum 6 adalah parfum kategori pria yang menyegarkan, cocok digunakan sehari-hari."
+  },
+  {
+    "id": 7,
+    "name": "Parfum 7",
+    "category": "wanita",
+    "price": 135000,
+    "stock": 17,
+    "image": "images/parfum3.jpg",
+    "deskripsi": "Parfum 7 adalah parfum kategori wanita yang menyegarkan, cocok digunakan sehari-hari."
+  },
+  {
+    "id": 8,
+    "name": "Parfum 8",
+    "category": "unisex",
+    "price": 140000,
+    "stock": 18,
+    "image": "images/parfum4.jpg",
+    "deskripsi": "Parfum 8 adalah parfum kategori unisex yang menyegarkan, cocok digunakan sehari-hari."
+  },
+  {
+    "id": 9,
+    "name": "Parfum 9",
+    "category": "pria",
+    "price": 145000,
+    "stock": 19,
+    "image": "images/parfum5.jpg",
+    "deskripsi": "Parfum 9 adalah parfum kategori pria yang menyegarkan, cocok digunakan sehari-hari."
+  },
+  {
+    "id": 10,
+    "name": "Parfum 10",
+    "category": "wanita",
+    "price": 150000,
+    "stock": 20,
+    "image": "images/parfum1.jpg",
+    "deskripsi": "Parfum 10 adalah parfum kategori wanita yang menyegarkan, cocok digunakan sehari-hari."
+  },
+  {
+    "id": 11,
+    "name": "Parfum 11",
+    "category": "unisex",
+    "price": 155000,
+    "stock": 21,
+    "image": "images/parfum2.jpg",
+    "deskripsi": "Parfum 11 adalah parfum kategori unisex yang menyegarkan, cocok digunakan sehari-hari."
+  },
+  {
+    "id": 12,
+    "name": "Parfum 12",
+    "category": "pria",
+    "price": 160000,
+    "stock": 22,
+    "image": "images/parfum3.jpg",
+    "deskripsi": "Parfum 12 adalah parfum kategori pria yang menyegarkan, cocok digunakan sehari-hari."
+  },
+  {
+    "id": 13,
+    "name": "Parfum 13",
+    "category": "wanita",
+    "price": 165000,
+    "stock": 23,
+    "image": "images/parfum4.jpg",
+    "deskripsi": "Parfum 13 adalah parfum kategori wanita yang menyegarkan, cocok digunakan sehari-hari."
+  },
+  {
+    "id": 14,
+    "name": "Parfum 14",
+    "category": "unisex",
+    "price": 170000,
+    "stock": 24,
+    "image": "images/parfum5.jpg",
+    "deskripsi": "Parfum 14 adalah parfum kategori unisex yang menyegarkan, cocok digunakan sehari-hari."
+  },
+  {
+    "id": 15,
+    "name": "Parfum 15",
+    "category": "pria",
+    "price": 175000,
+    "stock": 25,
+    "image": "images/parfum1.jpg",
+    "deskripsi": "Parfum 15 adalah parfum kategori pria yang menyegarkan, cocok digunakan sehari-hari."
+  },
+  {
+    "id": 16,
+    "name": "Parfum 16",
+    "category": "wanita",
+    "price": 180000,
+    "stock": 26,
+    "image": "images/parfum2.jpg",
+    "deskripsi": "Parfum 16 adalah parfum kategori wanita yang menyegarkan, cocok digunakan sehari-hari."
+  },
+  {
+    "id": 17,
+    "name": "Parfum 17",
+    "category": "unisex",
+    "price": 185000,
+    "stock": 27,
+    "image": "images/parfum3.jpg",
+    "deskripsi": "Parfum 17 adalah parfum kategori unisex yang menyegarkan, cocok digunakan sehari-hari."
+  },
+  {
+    "id": 18,
+    "name": "Parfum 18",
+    "category": "pria",
+    "price": 190000,
+    "stock": 28,
+    "image": "images/parfum4.jpg",
+    "deskripsi": "Parfum 18 adalah parfum kategori pria yang menyegarkan, cocok digunakan sehari-hari."
+  },
+  {
+    "id": 19,
+    "name": "Parfum 19",
+    "category": "wanita",
+    "price": 195000,
+    "stock": 29,
+    "image": "images/parfum5.jpg",
+    "deskripsi": "Parfum 19 adalah parfum kategori wanita yang menyegarkan, cocok digunakan sehari-hari."
+  },
+  {
+    "id": 20,
+    "name": "Parfum 20",
+    "category": "unisex",
+    "price": 200000,
+    "stock": 30,
+    "image": "images/parfum1.jpg",
+    "deskripsi": "Parfum 20 adalah parfum kategori unisex yang menyegarkan, cocok digunakan sehari-hari."
+  }
+]
