@@ -3,6 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#16a34a">
+  <link rel="manifest" href="manifest.json">
   <title>Toko Parfum</title>
   <link href="style.css" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
@@ -26,10 +30,17 @@
       padding: 2px 6px;
       line-height: 1;
     }
-  </style>
+      .animate-fade-in {
+      animation: fadeIn 0.6s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+</style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body class="bg-gray-50 text-gray-800 animate-fade-in">
 <header class="bg-white shadow sticky top-0 z-50">
   <div class="max-w-6xl mx-auto flex items-center justify-between px-4 py-2">
     <div class="text-green-600 text-xl font-bold">TokoParfum</div>
@@ -43,7 +54,7 @@
       <a href="admin/index.html" class="text-sm text-gray-500 hover:underline hidden md:inline-block" title="Admin">
   <i class="fas fa-user-shield"></i>
 </a>
-      <input id="search" type="text" placeholder="Cari parfum..." class="border rounded px-3 py-1 text-sm w-48" />
+      <input id="search" type="text" placeholder="Cari parfum..." class="border border-gray-300 rounded-lg px-4 py-2 text-sm w-full sm:w-64 focus:outline-none focus:ring-2 focus:ring-green-500" />
       <a href="keranjang.html" class="cart-icon text-green-600 text-xl fixed bottom-4 right-4 bg-white p-3 rounded-full shadow-lg z-50">
         <i class="fas fa-shopping-cart"></i>
         <span id="cart-count" class="cart-count">0</span>
@@ -93,7 +104,7 @@
 
 <section class="max-w-6xl mx-auto px-4 py-6">
   <h1 class="text-2xl font-bold text-center mb-4">Daftar Parfum</h1>
-  <div id="products-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"></div>
+  <div id="products-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 transition-all duration-500 ease-in-out"></div>
   <div class="flex justify-center items-center mt-4 gap-2">
   <button id="prev-btn" class="shadow px-3 py-1.5 rounded bg-white text-sm font-medium hover:bg-gray-100">&lt;</button>
   <span id="page-indicator" class="shadow px-3 py-1.5 rounded bg-white text-sm font-semibold">1</span>
@@ -103,7 +114,7 @@
 
 <!-- Modal Produk -->
 <div id="productModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
-  <div class="bg-white w-11/12 sm:w-96 rounded-xl shadow-lg p-5 relative">
+  <div class="bg-white w-11/12 sm:w-96 rounded-xl shadow-lg p-5 relative max-h-[90vh] overflow-y-auto">
     <button onclick="closeModal()" class="absolute top-2 right-3 text-gray-500 text-xl">&times;</button>
     <img id="modalImg" src="" class="w-full h-48 object-cover rounded mb-3" alt="Produk">
     <h2 id="modalName" class="text-xl font-bold mb-1"></h2>
@@ -114,7 +125,7 @@
 </div>
 
 <!-- Notifikasi Tambah Keranjang -->
-<div id="notif" class="fixed top-5 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-4 py-2 rounded shadow-lg text-sm hidden z-50 transition-all duration-300 ease-out animate-bounce">
+<div id="notif" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-green-500 text-white px-6 py-3 rounded-xl shadow-2xl text-sm sm:text-base hidden z-50 transition-opacity duration-500 ease-out">
   <span id="notif-message">Produk ditambahkan ke keranjang!</span>
 </div>
 
@@ -178,10 +189,10 @@
     sliced.forEach(p => {
       const randomBadge = badges[Math.floor(Math.random() * badges.length)];
       container.innerHTML += `
-        <div class="product-card bg-white rounded-xl shadow overflow-hidden">
+        <div class="product-card bg-white rounded-xl shadow overflow-hidden transform transition duration-300 hover:scale-105 hover:shadow-lg">
           <div class="relative">
             <span class="absolute top-2 left-2 ${randomBadge.bg} text-white text-xs px-2 py-0.5 rounded-full shadow text-center">${randomBadge.text}</span>
-            <img onclick="openModal('${p.image}', '${p.name}', ${p.price}, '${p.name} adalah parfum berkualitas')" class="w-full h-48 object-cover cursor-pointer" src="${p.image}" alt="${p.name}">
+            <img onclick="openModal('${p.image}', '${p.name}', ${p.price}, '${p.name} adalah parfum berkualitas')" class="w-full h-40 sm:h-48 object-cover rounded-t-xl cursor-pointer transition-transform duration-300 hover:scale-105" src="${p.image}" alt="${p.name}">
           </div>
           <div class="p-3">
             <h3 class="text-base font-semibold">${p.name}</h3>
@@ -198,6 +209,7 @@
       currentPage--;
       renderPage(currentPage);
       document.getElementById("loader").classList.add("hidden");
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
@@ -257,5 +269,11 @@
     menu.classList.toggle("hidden");
   });
 </script>
+<footer class="bg-white border-t mt-10 py-4 text-center text-sm text-gray-500">
+  <div class="max-w-6xl mx-auto px-4">
+    <p>&copy; 2025 <span class="font-semibold text-green-600">TokoParfum</span>. Semua hak dilindungi.</p>
+  </div>
+</footer>
 </body>
 </html>
+
