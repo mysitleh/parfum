@@ -27,7 +27,12 @@
   <div id="cart-items" class="space-y-4"></div>
 
   <div class="mt-6 border-t pt-4 text-right">
-    <h2 id="total" class="text-lg font-semibold mb-3">Total: Rp 0</h2>
+    <div class="mb-4 text-left">
+      <input id="nama" type="text" placeholder="Nama Lengkap" required class="w-full border rounded px-4 py-2 mb-2" />
+      <textarea id="alamat" placeholder="Alamat Lengkap" required class="w-full border rounded px-4 py-2"></textarea>
+    </div>
+    <h2 id="total" class="text-lg font-semibold mb-1">Total: Rp 0</h2>
+<p class="text-sm text-gray-500 mb-3">* Termasuk biaya layanan 2.5% untuk pengelolaan website</p>
     <button onclick="checkoutWA()" class="w-full sm:w-auto bg-green-500 text-white px-5 py-2 rounded hover:bg-green-600">
       Checkout via WhatsApp
     </button>
@@ -41,6 +46,8 @@ function loadCart() {
   const totalDisplay = document.getElementById("total");
   container.innerHTML = "";
   let total = 0;
+  let serviceFee = 0;
+  let grandTotal = 0;
 
   if (cart.length === 0) {
     container.innerHTML = "<p class='text-center text-gray-500'>Keranjang Anda kosong.</p>";
@@ -62,7 +69,9 @@ function loadCart() {
     container.appendChild(div);
   });
 
-  totalDisplay.textContent = "Total: Rp " + total.toLocaleString();
+  serviceFee = Math.ceil(total * 0.025);
+  grandTotal = total + serviceFee;
+  totalDisplay.textContent = `Total: Rp ${total.toLocaleString()} + Biaya Layanan Rp ${serviceFee.toLocaleString()} = Rp ${grandTotal.toLocaleString()}`;
 }
 
 function removeItem(index) {
@@ -73,19 +82,56 @@ function removeItem(index) {
 }
 
 function checkoutWA() {
+  const nama = document.getElementById("nama").value.trim();
+  const alamat = document.getElementById("alamat").value.trim();
   const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+  
+  if (!nama || !alamat) {
+    alert("Mohon lengkapi nama dan alamat.");
+    return;
+  }
   if (cart.length === 0) {
     alert("Keranjang kosong!");
     return;
   }
 
-  let message = "Halo, saya ingin memesan:%0A";
-  cart.forEach((item, i) => {
-    message += `%0A${i + 1}. ${item.name} - Rp ${item.price.toLocaleString()}`;
+  let message = `Halo, saya ingin memesan:%0A`; 
+  const itemMap = {};
+  cart.forEach(item => {
+    if (!itemMap[item.name]) {
+      itemMap[item.name] = { price: item.price, qty: 1 };
+    } else {
+      itemMap[item.name].qty++;
+    }
   });
 
-  const waURL = "https://wa.me/6281234567890?text=" + message;
-  window.open(waURL, "_blank");
+  let index = 1;
+  for (const [name, data] of Object.entries(itemMap)) {
+    const subtotal = data.price * data.qty;
+    message += `%0A${index}. ${name} (${data.qty}x) - Rp ${subtotal.toLocaleString()}`;
+    index++;
+  }
+
+  message += `%0A%0ANama: ${nama}%0AAlamat: ${alamat}`;
+
+  let total = cart.reduce((acc, item) => acc + item.price, 0);
+  let serviceFee = Math.ceil(total * 0.025);
+  let grandTotal = total + serviceFee;
+  fetch("https://script.google.com/macros/s/YOUR_DEPLOYED_SCRIPT_ID/exec", {
+    method: "POST",
+    body: JSON.stringify({
+      nama: nama,
+      alamat: alamat,
+      produk: cart.map(i => i.name).join(", "),
+      jumlah: cart.length,
+      total: grandTotal
+    })
+  });
+
+  message += `%0ABiaya Layanan (2.5%): Rp ${serviceFee.toLocaleString()}`;
+  message += `%0ATotal Bayar: Rp ${grandTotal.toLocaleString()}`;
+  const waURL = "https://wa.me/6287843116000?text=" + message;
+  window.location.href = waURL;
 }
 
 document.addEventListener("DOMContentLoaded", loadCart);
