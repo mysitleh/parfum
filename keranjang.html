@@ -130,7 +130,7 @@ function checkoutWA() {
 
   message += `%0ABiaya Layanan (2.5%): Rp ${serviceFee.toLocaleString()}`;
   message += `%0ATotal Bayar: Rp ${grandTotal.toLocaleString()}`;
-  const waURL = "https://wa.me/6287843116000?text=" + message;
+  const waURL = "https://api.whatsapp.com/send?phone=6287843116000&text=" + message;
   window.location.href = waURL;
 }
 
